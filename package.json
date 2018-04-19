@@ -1,0 +1,24 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "node command line hangman game",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomtom28/Week11-Hangman.git"
+  },
+  "author": "tomtom28",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomtom28/Week11-Hangman/issues"
+  },
+  "homepage": "https://github.com/tomtom28/Week11-Hangman#readme",
+  "dependencies": {
+    "chalk": "^2.4.0",
+    "inquirer": "^1.2.3",
+    "prompt": "^1.0.0"
+  }
+}

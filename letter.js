@@ -56,4 +56,4 @@ var LettersToDisplay = function (word, correctGuesses) {
 };
 
 //Export constructor function
-module.exports = lettersToDisplay;
+module.exports = LettersToDisplay;

@@ -1,31 +1,27 @@
-
-// Your game.js file will randomly select a word for the player.
-
-
-// Create a list of words
-var listOfWords = [
-  'html',
-  'css',
-  'javascript',
-  'jquery',
-  'ajax',
-  'node',
-  'ruby',
-  'c',
-  'php',
-  'python',
-  'java',
-  'sql',
-  'mysql',
-  'mongo',
-  'matlab',
-  'firebase',
-  'mongoose',
-  'express',
-  'react',
-  'meteor',
-  'handlebars'
+//Array of words for the game
+var wordList = [
+  'montgomery',
+  'juneau',
+  'phoenix',
+  'denver',
+  'sacramento',
+  'atlanta',
+  'honolulu',
+  'tallahassee',
+  'indianapolis',
+  'boston',
+  'jackson',
+  'trenton',
+  'nashville',
+  'austin',
+  'richmond',
+  'olympia',
+  'charleston',
+  'madison',
+  'cheyenne',
+  'salem',
+  'releigh'
 ];
 
 // Export the list of words to other hangman script(s)
-module.exports = listOfWords;
+module.exports = wordList;

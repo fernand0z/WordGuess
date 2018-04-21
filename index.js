@@ -1,137 +1,129 @@
-// index.js will contain the logic of your app. Running it in Terminal/Bash will start the game.
-// The app should end when a player guesses the correct word or runs out of guesses.
+//Run this file using node in your CLI program
+//Press CTRL + C to exit the game at any time
 
+//NPM packages to use 
 const chalk = require('chalk');
+const inquirer = require('inquirer');
+//Required modules from other files
+const wordList = require('./Words-dont-peek.js');
+const checkForLetter = require('./word.js');
+const lettersToDisplay = require('./letter.js');
 
-// Link in the Inquirer Package
-var inquirer = require('inquirer');
+//Declare variables
+var alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var lettersGuessed = [];
+var correctLetters = [];
+var displayGameWord;
 
-// Link the list of random words
-var guessWordList = require('./Words-dont-peek.js');
-
-// Link in the word tester
-var checkForLetter = require('./word.js');
-
-// Link in the letters to display
-var lettersToDisplay = require('./letter.js');
-
-// ----------------------------- Global Variables -----------------------------
-var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-var lettersAlreadyGuessed = [];
-var lettersCorrectlyGuessed = [];
-var displayHangman;
-
-// ----------------------------- Game Object -----------------------------
-
+//Game object to perform game operations
 var game = {
 
-    wordBank: guessWordList, // import a list of words
-    guessesRemaining: 10, // per word
-    currentWrd: null, // the word object
+    wordBank: wordList, //Word array
+    guessesRemaining: 10, //Variable to hold 10 guesses value
+    currentWord: null, // the word object
 
     startGame: function () {
-        // make sure the user has 10 guesses
+        //Reset guess value to 10
         this.guessesRemaining = 10;
-        // get a random word from the array
-        var j = Math.floor(Math.random() * this.wordBank.length);
-        this.currentWrd = this.wordBank[j];
-        // Inform User game has begun
+        //Random number generator to pull from word bank array
+        var x = Math.floor(Math.random() * this.wordBank.length);
+        this.currentWrd = this.wordBank[x];
+        //Display instructions to user
         console.log(chalk.bold.red("===============================WORD GUESS GAME================================"));
-        console.log(chalk.bold.cyan('                 Try to guess the word below!  Category: '));
-        // Show the empty letters ( _ _ _ _ ) and guesses, etc.
-        displayHangman = new lettersToDisplay(this.currentWrd);
-        displayHangman.parseDisplay();
+        console.log(chalk.bold.cyan('            Try to guess the word below!  Category: US State Capitals         '));
+        //Display the word's letter underscores
+        displayGameWord = new lettersToDisplay(this.currentWrd);
+        displayGameWord.parseDisplay();
         console.log(chalk.bold.green('\nGuesses Left: ' + game.guessesRemaining));
         console.log(chalk.bold.red("==============================================================================="));
-        // prompt for a letter
-        keepPromptingUser();
+        //Loop guess prompt
+        promptLoop();
     }
 };
 
 // ----------------------------- User Prompt Function (stand alone b/c of scoping issues inside the game object) -----------------------------
 
-function keepPromptingUser() {
-    // Always make a gap between inputs
-    console.log('');
-    // If enough guesses left, then prompt for new letter
+function promptLoop() {
+    console.log(''); //A space between each of the guessed letters.  Just for appearance.
+    //Check that there are guesses remaining
     if (game.guessesRemaining > 0) {
         inquirer.prompt([
             {
                 type: "value",
                 name: "letter",
-                message: "Guess a Letter: "
+                message: "Enter the letter you want to guess:  "
             }
         ]).then(function (userInput) {
-            // Collect Letter Input
+            //Convert the input to lowercase
             var inputLetter = userInput.letter.toLowerCase();
-            // Valid input
-            if (alphabet.indexOf(inputLetter) == -1) {
-                // Tell user they did not guess a letter
-                console.log(chalk.bgRed.bold('Sorry, "' + inputLetter + '" is not an acceptable guess. Try again!  Only use letters a-z.'));
+            //Input validation, user input must exist in the alpha array of alphabetic characters
+            if (alpha.indexOf(inputLetter) == -1) {
+                //Alert user of invalid input
+                console.log(chalk.bgRed.bold('Sorry, "' + inputLetter + '" is not a valid guess option. Try again using only letters a-z.'));
                 console.log(chalk.blue('Guesses Left: ' + game.guessesRemaining));
-                console.log(chalk.magenta('Letters already guessed: ' + lettersAlreadyGuessed));
-                keepPromptingUser();
+                console.log(chalk.magenta('Letters already guessed: ' + lettersGuessed));
+                promptLoop();
             }
-            else if (alphabet.indexOf(inputLetter) != -1 && lettersAlreadyGuessed.indexOf(inputLetter) != -1) {
+            //If statement to check if input exists in the alpha array AND checking if input exists in array of lettersGuessed
+            else if (alpha.indexOf(inputLetter) != -1 && lettersGuessed.indexOf(inputLetter) != -1) {
 
-                // Tell user they already guessed that letter
-                console.log(chalk.bgRed.bold("You've already guessed " + inputLetter + '. Try again!'));
+                //Alert user that they've entered a previously submitted letter
+                console.log(chalk.bgRed.bold("You have gussed '" + inputLetter + "'already. Try again using a new letter."));
                 console.log(chalk.blue('Guesses Left: ' + game.guessesRemaining));
-                console.log(chalk.magenta('Letters already guessed: ' + lettersAlreadyGuessed));
-                keepPromptingUser();
+                console.log(chalk.magenta('Your previous guesses: ' + lettersGuessed));
+                promptLoop();
             }
             else {
-                // Remove the entry from the list of possible inputs
-                lettersAlreadyGuessed.push(inputLetter);
+                //Add guessed letter to the lettersGuessed array
+                lettersGuessed.push(inputLetter);
 
-                // Check for the letter in the word
+                //Check for the letter in the word
                 var letterInWord = checkForLetter(inputLetter, game.currentWrd);
 
-                // If the letter is in the word, update the letter object
+                //If the letter is in the word, update the letter object
                 if (letterInWord) {
 
-                    // Add to correct letters list
-                    lettersCorrectlyGuessed.push(inputLetter);
+                    //Add to correct letters array
+                    correctLetters.push(inputLetter);
 
-                    // Show the empty letters ( _ _ _ _ ) and guesses, etc.
-                    displayHangman = new lettersToDisplay(game.currentWrd, lettersCorrectlyGuessed);
-                    displayHangman.parseDisplay();
+                    //Update the dsiaply to the user
+                    displayGameWord = new lettersToDisplay(game.currentWrd, correctLetters);
+                    displayGameWord.parseDisplay();
 
-                    //if statement to check if user has won
-                    if (displayHangman.winner) {
+                    //If statement to check if user has won
+                    if (displayGameWord.winner) {
                         console.log(chalk.bold.cyan('/////////////////////////////////////////////////'));
                         console.log(chalk.bold.bgCyan('-------------------  YOU WIN!  ------------------'));
                         console.log(chalk.bold.cyan('/////////////////////////////////////////////////'));
                         return;
                     }
-                    // Not a win yet, so ask for another input and decrement guesses
+                    //If not a winner, display guesses remaining and guessed letters
                     else {
-                        console.log('Guesses Left: ' + game.guessesRemaining);
-                        console.log(chalk.bold.yellow('Letters already guessed: ' + lettersAlreadyGuessed));
-                        keepPromptingUser();
+                        console.log(chalk.bold.blue('Guesses Left: ' + game.guessesRemaining));
+                        console.log(chalk.bold.yellow('Your previous guesses: ' + lettersGuessed));
+                        promptLoop();
                     }
                 }
-                // Otherwise, decrement guesses and re-prompt the old hangman object
+                //Decrement guesses and call the promptLoop function
                 else {
                     game.guessesRemaining--;
-                    displayHangman.parseDisplay();
-                    console.log('Guesses Left: ' + game.guessesRemaining);
-                    console.log('Letters already guessed: ' + lettersAlreadyGuessed);
-                    keepPromptingUser();
+                    displayGameWord.parseDisplay();
+                    console.log(chalk.bold.blue('Guesses Left: ' + game.guessesRemaining));
+                    console.log(chalk.bold.yellow('Your previous guesses: ' + lettersGuessed));
+                    promptLoop();
                 }
             }
         });
     }
-    // If not enough guesses left, then user losses
+    //If guessesRemaining == 0
     else {
         console.log(chalk.bold.red('/////////////////////////////////////////////////'));
-        console.log(chalk.bgRed("You're not a winner this time..."));
+        console.log(chalk.bgRed("You are out of guesses.  Game over."));
         console.log(chalk.bgRed("The word was '" + game.currentWrd + "'."));
         console.log(chalk.bgRed("To play again, type: 'node index.js'"));
         console.log(chalk.bold.red('/////////////////////////////////////////////////'));
     }
-
 }
 
-// Create a new game object using the constructor and begin playing
+//Create a new game object using the constructor and begin the game
 game.startGame();

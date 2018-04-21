@@ -1,6 +1,3 @@
-// @author: Thomas Thompson
-// @github: tomtom28
-// @comment: Homework 11 - Hangman Node Game
 
 // Your game.js file will randomly select a word for the player.
 

@@ -1,58 +1,59 @@
+//Declare required npm packages
 const chalk = require('chalk');
 
 //Constructor to display placeholder or letter chraracter
-var lettersToDisplay = function (word, goodGuesses) {
-
+var LettersToDisplay = function (word, correctGuesses) {
+    //Assign variables to the passed-in arguments
     this.gameWord = word;
-    this.goodLetters = goodGuesses;
+    this.correctLetters = correctGuesses;
     this.displayText = '_';
 
-    //Declare variable winner as false
+    //Initiating variable winner as false
     this.winner = false;
 
     //Function to display word to user
     this.parseDisplay = function () {
         //Variable to hold display game word characters to user
         var display = '';
-        // If no correct guesses have been input, display underscore for each character
-        //Game initial display to user
-        if (this.goodLetters == undefined) {
+        //Start game with underscores for each letter of the gameWord
+        //Create the initial display for the user at game start
+        if (this.correctLetters == undefined) {
             for (var i = 0; i < this.gameWord.length; i++) {
-                //Assign underscores to length of gameWord
+                //for each index in gameWord length, append underscore & spaces to display variable
                 display += ' _ ';
             }
         }
-        // Otherwise, check all letters in a double loop
+        //If there have been some correct guesses
         else {
-            // Double for loop... loop through the word itself and then each possible correct letter
+            //Nested loop statements to compare gameWord and correctLetters arrays
             for (var i = 0; i < this.gameWord.length; i++) {
-                // To determine whether a _ is needed
-                var letterWasFound = false;
-                for (var j = 0; j < this.goodLetters.length; j++) {
-                    // If yes the letter
-                    if (this.gameWord[i] == this.goodLetters[j]) {
-                        display += this.goodLetters[j];
-                        letterWasFound = true;
+                //Variable to hold boolean flag for _ or letter value
+                var letterMatch = false;
+                for (var j = 0; j < this.correctLetters.length; j++) {
+                    //If statement to check value of gameWord and correctLetters arrays
+                    if (this.gameWord[i] == this.correctLetters[j]) {
+                        display += this.correctLetters[j];
+                        letterMatch = true;
                     }
                 }
-                // If nothing was found
-                if (!letterWasFound) {
+                //If letterMatch is false, display underscore
+                if (!letterMatch) {
                     display += ' _ ';
                 }
             }
         }
 
-        // Remove first/last space and console log
+        //Declare variable to hold displayed letters with removed spaces
         this.displayText = display.trim();
+        //!!!REMOVE AFTER DEBUGGING
         console.log(chalk.bold.red(this.displayText));
 
-        // Check to see if the game was won (user display equals the word; ie no '_' marks)
+        //If statement comparing the displayText to gameWord to determine if user has won
         if (this.displayText == this.gameWord) {
             this.winner = true;
         }
-
     }
 };
 
-// export to use in word.js
+//Export constructor function
 module.exports = lettersToDisplay;

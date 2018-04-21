@@ -29,7 +29,16 @@ var game = {
         var x = Math.floor(Math.random() * this.wordBank.length);
         this.currentWrd = this.wordBank[x];
         //Display instructions to user
-        console.log(chalk.bold.red("===============================WORD GUESS GAME================================"));
+        console.log(chalk.bold.red("============================================================================================================================================================================="));
+
+        console.log(chalk.bold.red("oooooo   oooooo     oooo                          .o8       .oooooo.                                                 .oooooo.                                         "));
+        console.log(chalk.bold.red(" `888.    `888.     .8'                           888      d8P``  `Y8b                                               d8P'  `Y8b                                        "));
+        console.log(chalk.bold.red("  `888.   .8888.   .8'    .ooooo.  oooo d8b  .oooo888     888           oooo  oooo   .ooooo.   .oooo.o  .oooo.o    888            .oooo.   ooo. .oo.  .oo.    .ooooo. "));
+        console.log(chalk.bold.red("   `888  .8'`888. .8'    d88' `88b `888**8P d88' `888     888           `888  `888  d88' `88b d88(  `8 d88(  `8    888           `P  )88b  `888P`Y88bP`Y88b  d88' `88b"));
+        console.log(chalk.bold.red("    `888.8'  `888.8'     888   888  888     888   888     888     ooooo  888   888  888ooo888 ``Y88b.  ``Y88b.     888     ooooo  .oP`888   888   888   888  888ooo888"));
+        console.log(chalk.bold.red("     `888'    `888'      888   888  888     888   888     `88.    .88'   888   888  888    .o o.  )88b o.  )88b    `88.    .88'  d8(  888   888   888   888  888    .o"));
+        console.log(chalk.bold.red("      `8'      `8'       `Y8bod8P' d888b    `Y8bod88P`     `Y8bood8P'    `V88V`V8P' `Y8bod8P' 8``888P' 8``888P'     `Y8bood8P'   `Y888``8o o888o o888o o888o `Y8bod8P'"));
+        console.log(chalk.bold.red("============================================================================================================================================================================="));
         console.log(chalk.bold.cyan('            Try to guess the word below!  Category: US State Capitals         '));
         //Display the word's letter underscores
         displayGameWord = new lettersToDisplay(this.currentWrd);
@@ -92,9 +101,16 @@ function promptLoop() {
 
                     //If statement to check if user has won
                     if (displayGameWord.winner) {
-                        console.log(chalk.bold.cyan('/////////////////////////////////////////////////'));
-                        console.log(chalk.bold.bgCyan('-------------------  YOU WIN!  ------------------'));
-                        console.log(chalk.bold.cyan('/////////////////////////////////////////////////'));
+                        console.log(chalk.bold.cyan('///////////////////////////////////////////////////////////////////////////////////////////////'));
+                        console.log(chalk.bold.cyan(' ÛÛÛÛÛ ÛÛÛÛÛ    ÛÛÛÛÛÛÛ    ÛÛÛÛÛ  ÛÛÛÛÛ    ÛÛÛÛÛ   ÛÛÛ   ÛÛÛÛÛ ÛÛÛÛÛ ÛÛÛÛÛÛ   ÛÛÛÛÛ ÛÛÛ'));
+                        console.log(chalk.bold.cyan(' °°ÛÛÛ °°ÛÛÛ   ÛÛÛ°°°°°ÛÛÛ °°ÛÛÛ  °°ÛÛÛ    °°ÛÛÛ   °ÛÛÛ  °°ÛÛÛ °°ÛÛÛ °°ÛÛÛÛÛÛ °°ÛÛÛ °ÛÛÛ'));
+                        console.log(chalk.bold.cyan('  °°ÛÛÛ ÛÛÛ   ÛÛÛ     °°ÛÛÛ °ÛÛÛ   °ÛÛÛ     °ÛÛÛ   °ÛÛÛ   °ÛÛÛ  °ÛÛÛ  °ÛÛÛ°ÛÛÛ °ÛÛÛ °ÛÛÛ'));
+                        console.log(chalk.bold.cyan('   °°ÛÛÛÛÛ   °ÛÛÛ      °ÛÛÛ °ÛÛÛ   °ÛÛÛ     °ÛÛÛ   °ÛÛÛ   °ÛÛÛ  °ÛÛÛ  °ÛÛÛ°°ÛÛÛ°ÛÛÛ °ÛÛÛ'));
+                        console.log(chalk.bold.cyan('    °°ÛÛÛ    °ÛÛÛ      °ÛÛÛ °ÛÛÛ   °ÛÛÛ     °°ÛÛÛ  ÛÛÛÛÛ  ÛÛÛ   °ÛÛÛ  °ÛÛÛ °°ÛÛÛÛÛÛ °ÛÛÛ'));
+                        console.log(chalk.bold.cyan('     °ÛÛÛ    °°ÛÛÛ     ÛÛÛ  °ÛÛÛ   °ÛÛÛ      °°°ÛÛÛÛÛ°ÛÛÛÛÛ°    °ÛÛÛ  °ÛÛÛ  °°ÛÛÛÛÛ °°° '));
+                        console.log(chalk.bold.cyan('     ÛÛÛÛÛ    °°°ÛÛÛÛÛÛÛ°   °°ÛÛÛÛÛÛÛÛ         °°ÛÛÛ °°ÛÛÛ      ÛÛÛÛÛ ÛÛÛÛÛ  °°ÛÛÛÛÛ ÛÛÛ'));
+                        console.log(chalk.bold.cyan('    °°°°°       °°°°°°°      °°°°°°°°           °°°   °°°      °°°°° °°°°°    °°°°° °°° '));
+                        console.log(chalk.bold.cyan('///////////////////////////////////////////////////////////////////////////////////////////////'));
                         return;
                     }
                     //If not a winner, display guesses remaining and guessed letters
@@ -117,11 +133,23 @@ function promptLoop() {
     }
     //If guessesRemaining == 0
     else {
-        console.log(chalk.bold.red('/////////////////////////////////////////////////'));
-        console.log(chalk.bgRed("You are out of guesses.  Game over."));
+        console.log(chalk.bold.red('///////////////////////////////////////////////////////////////////'));
+        console.log(chalk.red("        __   __            _                     "));
+        console.log(chalk.red("        \\ \\ / /__  _   _  | |    ___  ___  ___   "));
+        console.log(chalk.red("         \\ V / _ \\| | | | | |   / _ \\/ __|/ _ \\  "));
+        console.log(chalk.red("          | | (_) | |_| | | |__| (_) \\__ \\  __/_ "));
+        console.log(chalk.red("          |_|\\___/ \\__,_| |_____\\___/|___/\\___(_)"));
+        console.log(chalk.red("                                                 "));
+        console.log(chalk.red("          ____                         ___                 "));
+        console.log(chalk.red("         / ___| __ _ _ __ ___   ___   / _ \\__   _____ _ __ "));
+        console.log(chalk.red("        | |  _ / _` | '_ ` _ \\ / _ \\ | | | \\ \\ / / _ \\ '__|"));
+        console.log(chalk.red("        | |_| | (_| | | | | | |  __/ | |_| |\\ V /  __/ | _ "));
+        console.log(chalk.red("         \\____|\\__,_|_| |_| |_|\\___|  \\___/  \\_/ \\___|_|(_)"));    
+        console.log("");
+        console.log(chalk.bgRed("You are out of guesses."));
         console.log(chalk.bgRed("The word was '" + game.currentWrd + "'."));
         console.log(chalk.bgRed("To play again, type: 'node index.js'"));
-        console.log(chalk.bold.red('/////////////////////////////////////////////////'));
+        console.log(chalk.bold.red('///////////////////////////////////////////////////////////////////'));
     }
 }
 
